@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--<link rel="shortcut icon" href="favicon.ico">-->
     <meta name="description" content="Record Playground">
     <meta name="keywords" content="Record Playground">
     <meta name="author" content="Faraj Farook">
@@ -18,8 +17,12 @@
     <main class="bg-white dark:bg-black dark:text-gray-100">
         <!-- Page -->
         <div class="p-6 mx-auto page max-w-3xl print:max-w-a4 md:max-w-a4 md:h-a4 xsm:p-8 sm:p-9 md:p-16">
-            <h1>Hello world!</h1>
-            <h2>Tip: Check your console</h2>
+            <div class="flex flex-col space-y-4">
+                <video autoplay muted></video>
+                <img class="shot-sample" />
+                <div class="grid grid-col-2 shots">
+                </div>
+            </div>
         </div>
     </main>
 </body>
