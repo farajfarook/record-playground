@@ -1,11 +1,10 @@
-import './style.css';
-import { nets, draw, detectAllFaces } from '@vladmandic/face-api'
+import { nets, detectAllFaces } from '@vladmandic/face-api'
 
 const md = navigator.mediaDevices
 const hasGetUserMedia = !!(md && md.getUserMedia)
 
 const shotsample: HTMLImageElement = document.querySelector(".shot-sample")
-const shots: HTMLImageElement = document.querySelector(".shots")
+const status: HTMLDivElement = document.querySelector('#status')
 
 const videoScreen: HTMLVideoElement = document.querySelector(".video-screen")
 const videoCam: HTMLVideoElement = document.querySelector(".video-cam")
@@ -51,12 +50,9 @@ if (hasGetUserMedia) {
 }
 
 async function setupMonitor() {
-
-    const faceCtx = faceCanvas.getContext("2d")
-    faceCtx.font = "15px Arial"
-    faceCtx.fillText("Loading AI. Please wait...", 0, 30)
-    shotsample.src = faceCanvas.toDataURL("image/webp")
+    setStatus("Loading AI Models...", "white")
     await nets.ssdMobilenetv1.loadFromUri('./models')
+    setStatus("AI Models initialized!", "white")
 
     const mediaWidth = videoScreen.videoWidth + videoCam.videoWidth
     const mediaHeigth = videoScreen.videoHeight
@@ -74,6 +70,11 @@ async function setupMonitor() {
         const faces = await detectAllFaces(videoCam)
         const noFace = faces.length == 0
         const multiFace = faces.length > 1
+
+        if (noFace) setStatus("No one is in the camera.", "yellow")
+        else if (multiFace) setStatus("Multiple people in the camera.", "red")
+        else setStatus("Single person in the camera.", "green")
+
         const faceCtx = faceCanvas.getContext('2d')
         faceCtx.clearRect(0, 0, faceCanvas.width, faceCanvas.height)
         faceCtx.beginPath()
@@ -106,4 +107,10 @@ async function setupMonitor() {
             imageCol++
         }
     }, 1000)
+}
+
+function setStatus(message: string, color: string) {
+    status.className = ""
+    status.classList.add(`text-${color}-700`)
+    status.innerHTML = message
 }
