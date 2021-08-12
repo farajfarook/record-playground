@@ -52,7 +52,7 @@ if (hasGetUserMedia) {
 
 async function setupMonitor() {
 
-    await nets.ssdMobilenetv1.loadFromUri('/models')
+    await nets.ssdMobilenetv1.loadFromUri('./models')
 
     const mediaWidth = videoScreen.videoWidth + videoCam.videoWidth
     const mediaHeigth = videoScreen.videoHeight
