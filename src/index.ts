@@ -52,6 +52,10 @@ if (hasGetUserMedia) {
 
 async function setupMonitor() {
 
+    const faceCtx = faceCanvas.getContext("2d")
+    faceCtx.font = "15px Arial"
+    faceCtx.fillText("Loading AI. Please wait...", 0, 30)
+    shotsample.src = faceCanvas.toDataURL("image/webp")
     await nets.ssdMobilenetv1.loadFromUri('./models')
 
     const mediaWidth = videoScreen.videoWidth + videoCam.videoWidth
